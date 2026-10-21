@@ -15,6 +15,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     name: Unit Tests & Coverage (>= 80%)
@@ -96,8 +100,11 @@ jobs:
 
   publish:
     name: Publish to PyPI
-    needs: [ lint, security, test ]
-    if: startsWith(github.ref, 'refs/tags/v')
+    needs:
+      - lint
+      - security
+      - test
+    if: success() && startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     environment:
       name: pypi
