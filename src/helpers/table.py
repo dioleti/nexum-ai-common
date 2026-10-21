@@ -5,7 +5,10 @@ from typing import Any
 import pandas as pd
 from PIL import Image
 
-from models import Region
+try:
+    from ..models import Region
+except (ImportError, ValueError):
+    from models import Region  # type: ignore[no-redef]
 
 
 def extract_table_dataframe(ocr_data: dict[str, list[Any]]) -> pd.DataFrame:

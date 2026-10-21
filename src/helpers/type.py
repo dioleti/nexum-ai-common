@@ -1,7 +1,10 @@
 import re
 from datetime import datetime
 
-from constants.date import formats
+try:
+    from ..constants.date import formats
+except (ImportError, ValueError):
+    from constants.date import formats  # type: ignore[no-redef]
 
 INT_RE = re.compile(r"^[+-]?\d+$")
 FLOAT_RE = re.compile(r"^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$")

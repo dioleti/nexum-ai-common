@@ -6,8 +6,12 @@ import numpy as np
 import pytesseract
 from PIL import Image
 
-from errors import NexumRuntimeError
-from models import Region, RegionType
+try:
+    from ..errors import NexumRuntimeError
+    from ..models import Region, RegionType
+except (ImportError, ValueError):
+    from errors import NexumRuntimeError  # type: ignore[no-redef]
+    from models import Region, RegionType  # type: ignore[no-redef]
 
 logger = logging.getLogger(__name__)
 
